@@ -57,7 +57,18 @@ public class PostgresDBAdapter extends AbstractDBAdapter {
             //Loop through all the results and create a new Film object to hold all its information
             while (results.next()) {
                 Film film = new Film();
-
+                film.setFilmId(results.getInt("FILM_ID"));
+                film.setTitle(results.getString("TITLE"));
+                film.setDescription(results.getString("DESCRIPTION"));
+                film.setReleaseYear(results.getString("RELEASE_YEAR"));
+                film.setLanguageId(results.getInt("LANGUAGE_ID"));
+                film.setRentalDuration(results.getInt("RENTAL_DURATION"));
+                film.setRentalRate(results.getDouble("RENTAL_RATE"));
+                film.setLength(results.getInt("LENGTH"));
+                film.setReplacementCost(results.getDouble("REPLACEMENT_COST"));
+                film.setRating(results.getString("RATING"));
+                film.setSpecialFeatures(results.getString("SPECIAL_FEATURES"));
+                film.setLastUpdate(results.getDate("LAST_UPDATE"));
                 //Add film to the array
                 films.add(film);
             }
@@ -134,6 +145,33 @@ public class PostgresDBAdapter extends AbstractDBAdapter {
             exception.printStackTrace();
         }
         return new ArrayList<>();
+    }
+
+    @Override
+    public List<Actor> insertAllActorsWithAnOddNumberLastName(List<Actor> actors) {
+        List<Actor> new_actors = new ArrayList<>();
+        String sql = "INSERT INTO Actor (first_name, last_name, last_update) VALUES (?, ?, ?) RETURNING actor_id, last_update";
+        try (PreparedStatement statement = conn.prepareStatement(sql)) {
+            for (Actor actor : actors) {
+                if (actor.getLastName().length() % 2 != 0) { // Check if the last name length is odd
+                    statement.setString(1, actor.getFirstName());
+                    statement.setString(2, actor.getLastName());
+                    statement.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
+                    ResultSet resultSet = statement.executeQuery();
+                    if (resultSet.next()) {
+                        Actor act = new Actor();
+                        act.setActorId(resultSet.getInt("actor_id"));
+                        act.setFirstName(actor.getFirstName());
+                        act.setLastName(actor.getLastName());
+                        act.setLastUpdate(resultSet.getTimestamp("last_update"));
+                        new_actors.add(act);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new_actors;
     }
 }
 

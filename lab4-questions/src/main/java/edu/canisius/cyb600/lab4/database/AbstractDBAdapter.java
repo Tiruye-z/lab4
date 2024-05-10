@@ -25,6 +25,7 @@ public abstract class AbstractDBAdapter {
 
     public abstract List<Film> getFilmsInCategory(Category category);
 
+    public abstract List<Actor> insertAllActorsWithAnOddNumberLastName(List<Actor> actors);
     //SELECTS
 
     //INSERTS
