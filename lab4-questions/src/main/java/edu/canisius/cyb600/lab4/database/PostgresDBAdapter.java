@@ -19,22 +19,19 @@ public class PostgresDBAdapter extends AbstractDBAdapter {
     }
 
     @Override
-    public List<Category> getAllDistinctCategoryNames() {
+    public List<String> getAllDistinctCategoryNames() {
         try (Statement statement = conn.createStatement()) {
             //This statement is easy
             //Select * from actor is saying "Return all Fields for all rows in films". Because there
             //is no "where clause", all rows are returned
-            ResultSet results = statement.executeQuery("Select * from category");
+            ResultSet results = statement.executeQuery("Select distinct name from category");
             //Initialize an empty List to hold the return set of films.
-            List<Category> categories = new ArrayList<>();
+            List<String> categories = new ArrayList<>();
             //Loop through all the results and create a new Film object to hold all its information
             while (results.next()) {
-                Category cate = new Category();
-                cate.setCategoryId(results.getInt("CategoryId"));
-                cate.setName(results.getString("Name"));
-                cate.setLastUpdate(results.getDate("LastUpdate"));
+
                 //Add film to the array
-                categories.add(cate);
+                categories.add(results.getString("name"));
             }
             //Return all the films.
             return categories;
@@ -45,13 +42,15 @@ public class PostgresDBAdapter extends AbstractDBAdapter {
     }
 
     @Override
-    public List<Film> getAllFilmsWithALengthLongerThanX() {
+    public List<Film> getAllFilmsWithALengthLongerThanX(int length) {
         //Create a string with the sql statement
-        String sql =  "SELECT * FROM Film WHERE length > 6";
+        String sql =  "SELECT * FROM Film WHERE length > ?";
         //Prepare the SQL statement with the code
         try (PreparedStatement statement = conn.prepareStatement(sql)) {
             //Substitute a string for last name for the ? in the sql
+            statement.setInt(1, length);
             ResultSet results = statement.executeQuery();
+
             //Initialize an empty List to hold the return set of films.
             List<Film> films = new ArrayList<>();
             //Loop through all the results and create a new Film object to hold all its information
@@ -82,16 +81,17 @@ public class PostgresDBAdapter extends AbstractDBAdapter {
 
 
     @Override
-    public List<Actor> getActorsFirstNameStartingWithX() {
+    public List<Actor> getActorsFirstNameStartingWithX(char firstLetter) {
         List<Actor> actors = new ArrayList<>();
 
         // Create an SQL statement to retrieve actors
-        String sql = "SELECT * FROM Actor WHERE last_name LIKE ?";
+        String sql = "SELECT * FROM actor WHERE first_name LIKE ?";
         try (PreparedStatement statement = conn.prepareStatement(sql)) {
-            statement.setString(1, "X%"); // Use wildcard to match any name starting with 'X'
+            statement.setString(1, firstLetter + "%"); // Use wildcard to match any name starting with 'X'
             ResultSet results = statement.executeQuery();
 
             while (results.next()) {
+
                 Actor actor = new Actor();
                 actor.setActorId(results.getInt("actor_id"));
                 actor.setFirstName(results.getString("first_name"));

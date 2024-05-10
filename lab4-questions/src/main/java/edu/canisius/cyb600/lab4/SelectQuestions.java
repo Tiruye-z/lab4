@@ -14,7 +14,7 @@ public class SelectQuestions extends PostgresConnectionHandler {
      *
      * @return A list of Strings that represent the categories.
      */
-    public List<Category> getAllDistinctCategoryNames() {
+    public List<String> getAllDistinctCategoryNames() {
         return this.dbAdapter.getAllDistinctCategoryNames();
     }
 
@@ -24,7 +24,7 @@ public class SelectQuestions extends PostgresConnectionHandler {
      * @return A list of films with a length longer than "length"
      */
     public List<Film> getAllFilmsWithALengthLongerThanX(int length) {
-        return this.dbAdapter.getAllFilmsWithALengthLongerThanX();
+        return this.dbAdapter.getAllFilmsWithALengthLongerThanX(length);
     }
 
     /**
@@ -33,7 +33,7 @@ public class SelectQuestions extends PostgresConnectionHandler {
      * @return A list of actors all sharing the first letter in the first name.
      */
     public List<Actor> getActorsFirstNameStartingWithX(char firstLetter) {
-        return this.dbAdapter.getActorsFirstNameStartingWithX();
+        return this.dbAdapter.getActorsFirstNameStartingWithX(firstLetter);
     }
 }
 

@@ -17,11 +17,11 @@ public abstract class AbstractDBAdapter {
         this.conn = conn;
     }
 
-    public abstract List<Category> getAllDistinctCategoryNames();
+    public abstract List<String> getAllDistinctCategoryNames();
 
-    public abstract List<Film> getAllFilmsWithALengthLongerThanX();
+    public abstract List<Film> getAllFilmsWithALengthLongerThanX(int length);
 
-    public abstract List<Actor> getActorsFirstNameStartingWithX();
+    public abstract List<Actor> getActorsFirstNameStartingWithX(char firstLetter);
 
     public abstract List<Film> getFilmsInCategory(Category category);
 
