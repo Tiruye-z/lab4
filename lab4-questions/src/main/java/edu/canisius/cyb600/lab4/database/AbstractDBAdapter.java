@@ -23,6 +23,8 @@ public abstract class AbstractDBAdapter {
 
     public abstract List<Actor> getActorsFirstNameStartingWithX();
 
+    public abstract List<Film> getFilmsInCategory(Category category);
+
     //SELECTS
 
     //INSERTS
