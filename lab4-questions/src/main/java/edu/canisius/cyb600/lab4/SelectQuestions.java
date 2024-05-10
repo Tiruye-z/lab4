@@ -1,6 +1,7 @@
 package edu.canisius.cyb600.lab4;
 
 import edu.canisius.cyb600.lab4.dataobjects.Actor;
+import edu.canisius.cyb600.lab4.dataobjects.Category;
 import edu.canisius.cyb600.lab4.dataobjects.Film;
 import edu.canisius.cyb600.lab4.jdbc.PostgresConnectionHandler;
 
@@ -10,10 +11,11 @@ public class SelectQuestions extends PostgresConnectionHandler {
 
     /**
      * Return all unique categories from the "Category" table in the Sakila database
+     *
      * @return A list of Strings that represent the categories.
      */
-    public List<String> getAllDistinctCategoryNames() {
-        return null;
+    public List<Category> getAllDistinctCategoryNames() {
+        return this.dbAdapter.getAllDistinctCategoryNames();
     }
 
     /**
@@ -22,7 +24,7 @@ public class SelectQuestions extends PostgresConnectionHandler {
      * @return A list of films with a length longer than "length"
      */
     public List<Film> getAllFilmsWithALengthLongerThanX(int length) {
-        return null;
+        return this.dbAdapter.getAllFilmsWithALengthLongerThanX();
     }
 
     /**
@@ -31,7 +33,7 @@ public class SelectQuestions extends PostgresConnectionHandler {
      * @return A list of actors all sharing the first letter in the first name.
      */
     public List<Actor> getActorsFirstNameStartingWithX(char firstLetter) {
-        return null;
+        return this.dbAdapter.getActorsFirstNameStartingWithX();
     }
 }
 

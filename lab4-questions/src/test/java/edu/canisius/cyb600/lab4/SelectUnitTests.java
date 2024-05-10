@@ -3,6 +3,7 @@ package edu.canisius.cyb600.lab4;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.canisius.cyb600.lab4.dataobjects.Actor;
+import edu.canisius.cyb600.lab4.dataobjects.Category;
 import edu.canisius.cyb600.lab4.dataobjects.Film;
 import org.junit.Test;
 

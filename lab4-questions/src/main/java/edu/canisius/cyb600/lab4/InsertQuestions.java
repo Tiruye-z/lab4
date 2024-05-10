@@ -5,7 +5,7 @@ import edu.canisius.cyb600.lab4.jdbc.PostgresConnectionHandler;
 
 import java.util.List;
 
-public class InsertQuestions extends PostgresConnectionHandler {
+public class              InsertQuestions extends PostgresConnectionHandler {
 
     /**
      * Insert a list of actors all with an odd number of characters in their last name.
